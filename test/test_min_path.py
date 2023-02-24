@@ -9,9 +9,10 @@ class TestMinPath(TestCase):
         destinations = data.get('destinations')
         distances = data.get('distances')
 
-        result = min_path_calc(self, destinations, distances)
+        result = min_path_calc(destinations, distances)
+        waited = ['Munich', 'Mitling', 'Kinganru', 'Facenianorth', 'Kinganru', 'SantaTiesrie']
 
-        self.assertTrue(True)
+        self.assertEqual(waited, result)
         
 
     

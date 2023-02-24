@@ -20,15 +20,7 @@ class TestRouteCalculate(TestCase):
 
     def setUp(self):
         self.app = Flask(__name__)
-        add_routes(self.app)
-
-    def test_min_path_calc(self):
-        data = mock_input_data()
-        destinations = data.get('destinations')
-        distances = data.get('distances')
-        
-
-        
+        add_routes(self.app)       
 
     def test_calculate(self):
         """Test trip calculate"""

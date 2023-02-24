@@ -14,7 +14,7 @@ def create_graph(distances: List[str]):
     return graph               
 
 
-def min_path_calc(self, destinations: List[str], distances: List[str]) -> List[str]:
+def min_path_calc(destinations: List[str], distances: List[str]) -> List[str]:
     graph = create_graph(distances)
     destinations.insert(0, "Munich")
     path = [["Munich"]]
