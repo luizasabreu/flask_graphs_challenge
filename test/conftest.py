@@ -1,7 +1,7 @@
 def mock_input_data():
     return {
     "name": "Alanto",
-    "destionations": ["Kinganru", "Facenianorth", "SantaTiesrie"],
+    "destinations": ["Kinganru", "Facenianorth", "SantaTiesrie"],
     "business": True,
     "distances": [
         "Munich - Munich: 0",
