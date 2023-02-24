@@ -1,2 +1,2 @@
 from .example import Example
-from .dikstra import disktra_calc
+from .min_path import min_path_calc

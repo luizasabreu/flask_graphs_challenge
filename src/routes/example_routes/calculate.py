@@ -1,5 +1,5 @@
 from flask import request
-from src.models import dikstra
+from src.models import min_path
 
 def calculate() -> dict:
     """Find all places that must be visited in order to have a minimum travel time for a given input
