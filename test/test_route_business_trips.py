@@ -25,8 +25,7 @@ class TestRouteBusinessTrips(TestCase):
     def test_trips_info(self):
         """Test business trip information"""
         with self.app.test_client() as test_client:
-            response = test_client.post('/business-trips')
-            # import pdb; pdb.set_trace()
+            response = test_client.get('/business-trips')
 
             waited = {'penguins_with_most_trips': "luiza",
               'most_visited_place': ['teste1', 'teste2'],

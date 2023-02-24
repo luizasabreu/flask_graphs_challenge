@@ -27,10 +27,8 @@ class TestRouteCalculate(TestCase):
 
     def test_calculate(self, mock_input_data=mock_input_data()):
         """Test trip calculate"""
-        with self.app.test_client() as test_client:   
-            import pdb;pdb.set_trace()                       
-            response = test_client.post('/calculate', data=mock_input_data)
-            
+        with self.app.test_client() as test_client:                        
+            response = test_client.post('/calculate', data=mock_input_data)            
 
             waited = {"places_to_travel": ["Munich", "Mitling", "Kinganru", "Facenianorth", "Kinganru", "SantaTiesrie"]}
 

@@ -12,5 +12,5 @@ def add_routes(target_app: Flask = app) -> None:
     """
     target_app.add_url_rule(rule='/', view_func=list_routes)
     target_app.add_url_rule(rule='/count', view_func=count_calls)
-    target_app.add_url_rule(rule='/calculate', view_func=calculate)
-    target_app.add_url_rule(rule='/business-trips', view_func=business_trips, methods=["POST"])
+    target_app.add_url_rule(rule='/calculate', view_func=calculate, methods=["POST"])
+    target_app.add_url_rule(rule='/business-trips', view_func=business_trips, methods=["GET"])
