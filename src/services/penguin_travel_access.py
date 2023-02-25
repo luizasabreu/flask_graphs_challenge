@@ -9,4 +9,5 @@ def save_penguin_travel(name: str, business: bool, places_to_travel: List[str]):
     penguin_travel.save()
 
 def get_penguin_travels():
+
     return PenguinTravel.objects()
