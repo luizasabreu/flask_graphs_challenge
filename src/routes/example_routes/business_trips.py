@@ -20,11 +20,11 @@ def __get_penguins_with_most_trips(penguin_travels):
     return __get_keys_with_the_greatest_value(names_dict)
 
 def __get_most_visited_places(penguin_travels):
-    visited_places = [travel.visited_places for travel in penguin_travels]
-    visited_places_list = (list(itertools.chain(*visited_places)))
-    visited_places_dict = __create_count_dict(visited_places_list)
+    places_to_travel = [travel.places_to_travel for travel in penguin_travels]
+    places_to_travel_list = (list(itertools.chain(*places_to_travel)))
+    places_to_travel_dict = __create_count_dict(places_to_travel_list)
     
-    return __get_keys_with_the_greatest_value(visited_places_dict)
+    return __get_keys_with_the_greatest_value(places_to_travel_dict)
 
 def __create_count_dict(items_list):
     new_dict = {}
