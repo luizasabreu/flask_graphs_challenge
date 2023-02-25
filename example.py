@@ -2,7 +2,7 @@ import requests
 
 payload = {
     "name": "Alanto",
-    "destionations": ["Kinganru", "Facenianorth", "SantaTiesrie"],
+    "destinations": ["Kinganru", "Facenianorth", "SantaTiesrie"],
     "business": True,
     "distances": [
         "Munich - Munich: 0",

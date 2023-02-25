@@ -18,10 +18,12 @@ def min_path_calc(destinations: List[str], distances: List[str]) -> List[str]:
     graph = create_graph(distances)
     destinations.insert(0, "Munich")
     path = [["Munich"]]
+
     for i in range(len(destinations)-1):
         cities = nx.shortest_path(graph, destinations[i], destinations[i+1], weight="weight")
         path.append(cities[1:])
-    path = (list(itertools.chain(*path)))   
-    
-    return path
+
+    new_path = (list(itertools.chain(*path)))  
+
+    return new_path
 
