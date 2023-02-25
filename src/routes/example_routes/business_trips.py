@@ -28,13 +28,9 @@ def business_trips() -> dict:
             visited_places[place] += 1
         else:
             visited_places[place] = 1
-
-
-    max_names_count = max(names.values())    
-    penguins_with_most_trips = list(map(lambda x: x[0], filter(lambda x: x[1] == max_names_count, names.items())))
-
-    max_visited_places_count = max(visited_places.values())
-    most_visited_place = list(map(lambda x: x[0], filter(lambda x: x[1] == max_visited_places_count, visited_places.items())))
+  
+    penguins_with_most_trips = __get_keys_with_the_greatest_value(names)
+    most_visited_place = __get_keys_with_the_greatest_value(visited_places)
 
     total_business_trips = count_business
 
@@ -44,3 +40,15 @@ def business_trips() -> dict:
     
     return result
 
+def __get_keys_with_the_greatest_value(dictionary):
+    max_value = max(dictionary.values())
+    return list(map(__get_keys(), __filter_dict_by_max_value(dictionary, max_value)))
+
+def __filter_dict_by_max_value(dictionary, max_value):
+    return filter(__get_values_equals_to(max_value), dictionary.items())
+
+def __get_values_equals_to(max_value):
+    return lambda x: x[1] == max_value 
+
+def __get_keys():
+    return lambda x: x[0]
