@@ -1,5 +1,5 @@
 from unittest import TestCase
-from src.services import min_path_calc
+from src.services import get_optimal_path
 from test.conftest import mock_input_data
 
 
@@ -9,7 +9,7 @@ class TestMinPath(TestCase):
         destinations = data.get('destinations')
         distances = data.get('distances')
 
-        result = min_path_calc(destinations, distances)
+        result = get_optimal_path(destinations, distances)
         waited = ['Munich', 'Mitling', 'Kinganru', 'Facenianorth', 'Kinganru', 'SantaTiesrie']
 
         self.assertEqual(waited, result)

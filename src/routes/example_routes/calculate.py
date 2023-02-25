@@ -1,7 +1,7 @@
 from typing import List
 from flask import request
 from src.models.penguin_travel import PenguinTravel
-from src.services import min_path_calc
+from src.services import get_optimal_path
 import mongoengine as me
 
 def __saveData(name: str, business: bool, visited_places: List[str]):
@@ -20,7 +20,7 @@ def calculate() -> List[str]:
     destinations = data['destinations']
     distances = data['distances']
     
-    places_to_travel = min_path_calc(destinations, distances)
+    places_to_travel = get_optimal_path(destinations, distances)
     
     __saveData(data['name'], data['business'], places_to_travel)
 

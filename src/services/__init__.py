@@ -1,1 +1,1 @@
-from .min_path import min_path_calc
+from .path_optimization import get_optimal_path

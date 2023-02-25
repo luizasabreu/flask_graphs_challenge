@@ -7,41 +7,46 @@ def business_trips() -> dict:
     Returns: dict with information about business trips
     """
     penguin_travels = PenguinTravel.objects()
-    names = {}
-    count_business = 0
-    visited_places_list = []
-    for travel in penguin_travels:
-        if travel.name in names.keys():
-            names[travel.name] += 1
-        else:
-            names[travel.name] = 1
 
+    return {'penguins_with_most_trips': __get_penguins_with_most_trips(penguin_travels),
+            'most_visited_place': __get_most_visited_places(penguin_travels),
+            'total_business_trips': __get_total_business_trips(penguin_travels)}
+    
+
+def __get_penguins_with_most_trips(penguin_travels):
+    names_list = [travel.name for travel in penguin_travels]
+    names_dict = __create_count_dict(names_list)
+
+    return __get_keys_with_the_greatest_value(names_dict)
+
+def __get_most_visited_places(penguin_travels):
+    visited_places = [travel.visited_places for travel in penguin_travels]
+    visited_places_list = (list(itertools.chain(*visited_places)))
+    visited_places_dict = __create_count_dict(visited_places_list)
+    
+    return __get_keys_with_the_greatest_value(visited_places_dict)
+
+def __create_count_dict(items_list):
+    new_dict = {}
+    for item in items_list:
+        if item in new_dict.keys():
+            new_dict[item] += 1
+        else:
+            new_dict[item] = 1
+
+    return new_dict
+
+def __get_total_business_trips(penguin_travels):
+    count_business = 0    
+    for travel in penguin_travels:
         if travel.is_business_trip:
             count_business+=1
 
-        visited_places_list.append(travel.visited_places)
-
-    visited_places_list = (list(itertools.chain(*visited_places_list)))  
-    visited_places = {}
-    for place in visited_places_list:
-        if place in visited_places.keys():
-            visited_places[place] += 1
-        else:
-            visited_places[place] = 1
-  
-    penguins_with_most_trips = __get_keys_with_the_greatest_value(names)
-    most_visited_place = __get_keys_with_the_greatest_value(visited_places)
-
-    total_business_trips = count_business
-
-    result = {'penguins_with_most_trips': penguins_with_most_trips,
-              'most_visited_place': most_visited_place,
-              'total_business_trips': total_business_trips}
-    
-    return result
+    return count_business  
 
 def __get_keys_with_the_greatest_value(dictionary):
     max_value = max(dictionary.values())
+
     return list(map(__get_keys(), __filter_dict_by_max_value(dictionary, max_value)))
 
 def __filter_dict_by_max_value(dictionary, max_value):
