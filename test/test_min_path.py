@@ -1,5 +1,5 @@
 from unittest import TestCase
-from src.models import min_path_calc
+from src.services import min_path_calc
 from test.conftest import mock_input_data
 
 

@@ -1,2 +1,2 @@
 from .example import Example
-from .min_path import min_path_calc
+from .penguin_travel import PenguinTravel
