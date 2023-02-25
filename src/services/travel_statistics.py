@@ -1,29 +1,48 @@
-from typing import List
-import networkx as nx
 import itertools
 
-def create_graph(distances: List[str]):
-    graph = nx.Graph()   
-    for register in distances:
-        origin = register.split("-")[0].strip()
-        destination = register.split("-")[1].split(":")[0].strip()
-        hours = int(register.split("-")[1].split(":")[1].strip())
-        graph.add_node(origin)
-        graph.add_node(destination)
-        graph.add_edge(origin, destination, weight=hours)
-    return graph               
+
+def get_penguins_with_most_trips(penguin_travels):
+    names_list = [travel.name for travel in penguin_travels]
+    names_dict = __create_count_dict(names_list)
+
+    return __get_keys_with_the_greatest_value(names_dict)
+
+def get_most_visited_places(penguin_travels):
+    places_to_travel = [travel.places_to_travel for travel in penguin_travels]
+    places_to_travel_list = (list(itertools.chain(*places_to_travel)))
+    places_to_travel_dict = __create_count_dict(places_to_travel_list)
+    
+    return __get_keys_with_the_greatest_value(places_to_travel_dict)
 
 
-def min_path_calc(destinations: List[str], distances: List[str]) -> List[str]:
-    graph = create_graph(distances)
-    destinations.insert(0, "Munich")
-    path = [["Munich"]]
+def get_total_business_trips(penguin_travels):
+    count_business = 0    
+    for travel in penguin_travels:
+        if travel.is_business_trip:
+            count_business+=1
 
-    for i in range(len(destinations)-1):
-        cities = nx.shortest_path(graph, destinations[i], destinations[i+1], weight="weight")
-        path.append(cities[1:])
+    return count_business  
 
-    new_path = (list(itertools.chain(*path)))  
+def __create_count_dict(items_list):
+    new_dict = {}
+    for item in items_list:
+        if item in new_dict.keys():
+            new_dict[item] += 1
+        else:
+            new_dict[item] = 1
 
-    return new_path
+    return new_dict
 
+def __get_keys_with_the_greatest_value(dictionary):
+    max_value = max(dictionary.values())
+
+    return list(map(__get_keys(), __filter_dict_by_max_value(dictionary, max_value)))
+
+def __filter_dict_by_max_value(dictionary, max_value):
+    return filter(__get_values_equals_to(max_value), dictionary.items())
+
+def __get_values_equals_to(max_value):
+    return lambda x: x[1] == max_value 
+
+def __get_keys():
+    return lambda x: x[0]

@@ -1,8 +1,8 @@
 from flask import Flask
 
 from src import app
-from .example_routes import count_calls, list_routes, calculate, business_trips
-
+from src.routes import business_trips, calculate
+from .example_routes import count_calls, list_routes
 
 def add_routes(target_app: Flask = app) -> None:
     """Add routes to main app
