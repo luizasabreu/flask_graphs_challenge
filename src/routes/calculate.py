@@ -1,8 +1,6 @@
 from typing import List
 from flask import request
-from src.models.penguin_travel import PenguinTravel
 from src.services import get_optimal_path
-import mongoengine as me
 
 from src.services.penguin_travel_access import save_penguin_travel
 

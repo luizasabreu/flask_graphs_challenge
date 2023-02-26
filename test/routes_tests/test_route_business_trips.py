@@ -2,11 +2,10 @@ from unittest import TestCase
 
 from mongoengine import connect, disconnect
 from flask import Flask
-import requests
+import pytest
 from src.models.penguin_travel import PenguinTravel
 
 from src.routes import add_routes
-from test.conftest import mock_input_data
 
 
 class TestRouteBusinessTrips(TestCase):
@@ -46,10 +45,14 @@ class TestRouteBusinessTrips(TestCase):
             self.assertDictEqual(response.json, expected)
 
     
-    def __create_trips_mock(self, input_data = mock_input_data() ):
-         
+    def __create_trips_mock(self):
+         input_data = self.input_data
          penguin_travel = PenguinTravel(name=input_data["name"], 
                                    is_business_trip=input_data["business"], 
                                    destinations=["Munich", "Mitling"])   
          penguin_travel.save()       
          return penguin_travel
+
+    @pytest.fixture(autouse=True)
+    def __mock_input_data(self, mock_input_data_fixture):
+        self.input_data =  mock_input_data_fixture

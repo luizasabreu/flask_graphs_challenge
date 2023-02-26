@@ -16,7 +16,7 @@ def get_optimal_path(destinations: List[str], distances: List[str]) -> List[str]
     
     return new_path
 
-def __create_graph(distances: List[str]):
+def __create_graph(distances: List[str]) -> nx.Graph:
     graph = nx.Graph()   
     for register in distances:
         origin = register.split("-")[0].strip()

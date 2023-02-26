@@ -2,10 +2,10 @@ from unittest import TestCase
 
 from mongoengine import connect, disconnect
 from flask import Flask
+import pytest
 import requests
 
 from src.routes import add_routes
-from test.conftest import mock_input_data
 
 
 class TestRouteCalculate(TestCase):
@@ -25,25 +25,36 @@ class TestRouteCalculate(TestCase):
 
     def test_route_calculate(self):
         """Test trip calculate"""
-        with self.app.test_client() as test_client:                        
-            response = test_client.post('/calculate', json=mock_input_data())            
-
+        with self.app.test_client() as test_client:                                   
+            # Arrange
             waited = ["Munich", 
                        "Mitling", 
                        "Kinganru", 
                        "Facenianorth", 
                        "Kinganru", 
                        "SantaTiesrie"]
+            # Act
+            response = test_client.post('/calculate', json=self.input_data) 
 
+            # Assert
             self.assertEqual(waited, response.json)
-    
-    def test_route_calculate_from_example(self):
-        res = requests.post('http://127.0.0.1:8001/calculate', json=mock_input_data())
-        waited = ["Munich", 
-                       "Mitling", 
-                       "Kinganru", 
-                       "Facenianorth", 
-                       "Kinganru", 
-                       "SantaTiesrie"]
+
         
+    def test_route_calculate_from_example(self):
+        # Arrange
+        waited = ["Munich", 
+                 "Mitling", 
+                 "Kinganru", 
+                 "Facenianorth", 
+                 "Kinganru", 
+                 "SantaTiesrie"]
+        
+        # Act
+        res = requests.post('http://127.0.0.1:8001/calculate', json=self.input_data)
+
+        # Assert        
         self.assertEqual(waited, res.json())
+
+    @pytest.fixture(autouse=True)
+    def __mock_input_data(self, mock_input_data_fixture):
+        self.input_data =  mock_input_data_fixture

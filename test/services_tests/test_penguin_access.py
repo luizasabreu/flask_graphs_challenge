@@ -1,5 +1,4 @@
 from unittest import TestCase
-from pyparsing import Generator
 import pytest
 from src.models.penguin_travel import PenguinTravel
 from src.services.penguin_travel_access import save_penguin_travel
@@ -19,10 +18,9 @@ class TestPenguinTravelAccess(TestCase):
         self.assertTrue(True)
     
     @pytest.fixture(autouse=True)
-    def monkeypatched_save_penguin_travel(self, monkeypatch: Generator[pytest.MonkeyPatch, None, None]):
+    def monkeypatched_save_penguin_travel(self, monkeypatch):
         def save_penguin_travel(self):
             pass
-
         monkeypatch.setattr(PenguinTravel, "save", save_penguin_travel)
 
 
