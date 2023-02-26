@@ -23,6 +23,10 @@ class TestRouteCalculate(TestCase):
         self.app = Flask(__name__)
         add_routes(self.app)      
 
+    @pytest.fixture(autouse=True)
+    def mock_input_data(self, mock_input_data_fixture):
+        self.input_data =  mock_input_data_fixture
+        
     def test_route_calculate(self):
         """Test trip calculate"""
         with self.app.test_client() as test_client:                                   
@@ -55,6 +59,4 @@ class TestRouteCalculate(TestCase):
         # Assert        
         self.assertEqual(waited, res.json())
 
-    @pytest.fixture(autouse=True)
-    def __mock_input_data(self, mock_input_data_fixture):
-        self.input_data =  mock_input_data_fixture
+    

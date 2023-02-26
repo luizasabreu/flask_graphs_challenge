@@ -23,6 +23,10 @@ class TestRouteBusinessTrips(TestCase):
         self.app = Flask(__name__)
         add_routes(self.app)
 
+    @pytest.fixture(autouse=True)
+    def mock_input_data(self, mock_input_data_fixture):
+        self.input_data =  mock_input_data_fixture
+        
     def test_route_business_trips(self):
         """Test business trip information"""
         with self.app.test_client() as test_client:
@@ -53,6 +57,4 @@ class TestRouteBusinessTrips(TestCase):
          penguin_travel.save()       
          return penguin_travel
 
-    @pytest.fixture(autouse=True)
-    def __mock_input_data(self, mock_input_data_fixture):
-        self.input_data =  mock_input_data_fixture
+    

@@ -1,13 +1,24 @@
 from unittest import TestCase
+
+import pytest
 from src.services import get_optimal_path
 
 
 
 class TestPathOtimization(TestCase):
+    
+    @pytest.fixture(autouse=True)
+    def mock_destinations(self, mock_destinations_fixture):
+        self.destinations =  mock_destinations_fixture
+
+    @pytest.fixture(autouse=True)
+    def mock_distances(self, mock_distances_fixture):
+        self.distances = mock_distances_fixture
+
     def test_get_optimal_path_without_destinations(self):
         # Arrange
         destinations = []
-        distances = self.__mock_distances()
+        distances = self.distances
         expected = ['Munich']
 
         # Act
@@ -18,8 +29,8 @@ class TestPathOtimization(TestCase):
 
     def test_get_optimal_path(self):
         # Arrange
-        destinations = self.__mock_destinations()
-        distances = self.__mock_distances() 
+        destinations = self.destinations
+        distances = self.distances
         expected = ['Munich', 'Mitling', 'Kinganru', 'Facenianorth', 'Kinganru', 'SantaTiesrie']
 
         # Act
@@ -27,23 +38,7 @@ class TestPathOtimization(TestCase):
 
         # Assert
         self.assertEqual(result, expected)
-
     
-    def __mock_destinations(self):
-        return  ["Kinganru", "Facenianorth", "SantaTiesrie"]
-    
-    def __mock_distances(self):
-        return  ["Munich - Munich: 0",
-                "Munich - Kinganru: 3",
-                "Munich - Facenianorth: 7",
-                "Munich - SantaTiesrie: 4",
-                "Munich - Mitling: 1",
-                "Kinganru - Facenianorth: 2",
-                "Kinganru - SantaTiesrie: 1",
-                "Kinganru - Mitling: 1",
-                "Facenianorth - SantaTiesrie: 5",
-                "Facenianorth - Mitling:  3",
-                "SantaTiesrie - Mitling: 2"]
         
 
     

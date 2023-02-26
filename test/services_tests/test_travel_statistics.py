@@ -7,9 +7,14 @@ from src.services.travel_statistics import get_most_visited_places, get_penguins
 
 
 class TestTravelStatistics(TestCase):
+    
+    @pytest.fixture(autouse=True)
+    def mock_penguin_travels(self, mock_penguin_travels_fixture):
+        self.penguin_travels =  mock_penguin_travels_fixture
+
     def test_get_penguins_with_most_trips(self):
         # Arrange
-        penguin_travels = self.__mock_penguin_travels()
+        penguin_travels = self.penguin_travels
         expected = ["Luiza"]
 
         # Act
@@ -20,7 +25,7 @@ class TestTravelStatistics(TestCase):
 
     def test_get_most_visited_places(self):
         # Arrange
-        penguin_travels = self.__mock_penguin_travels()
+        penguin_travels = self.penguin_travels
         expected = ["Brazil"]
 
         # Act
@@ -31,7 +36,7 @@ class TestTravelStatistics(TestCase):
 
     def test_get_total_business_trips(self):
         # Arrange
-        penguin_travels = self.__mock_penguin_travels()
+        penguin_travels = self.penguin_travels
         expected = 1
 
         # Act
@@ -40,11 +45,5 @@ class TestTravelStatistics(TestCase):
         # Assert
         self.assertEqual(result, expected)
 
-    def __mock_penguin_travels(self):
-        class MockedPenguinTravel():
-            def __init__(self) -> None:
-                self.name = "Luiza"
-                self.destinations = ["Brazil"]
-                self.is_business_trip = True
-        return [MockedPenguinTravel()]
+   
         
