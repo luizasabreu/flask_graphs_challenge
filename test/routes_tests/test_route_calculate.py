@@ -23,19 +23,7 @@ class TestRouteCalculate(TestCase):
         self.app = Flask(__name__)
         add_routes(self.app)      
 
-    def test_example(self):
-        res = requests.post('http://127.0.0.1:8001/calculate', json=mock_input_data())
-        waited = ["Munich", 
-                       "Mitling", 
-                       "Kinganru", 
-                       "Facenianorth", 
-                       "Kinganru", 
-                       "SantaTiesrie"]
-        
-        self.assertEqual(waited, res.json())
-
-
-    def test_calculate(self):
+    def test_route_calculate(self):
         """Test trip calculate"""
         with self.app.test_client() as test_client:                        
             response = test_client.post('/calculate', json=mock_input_data())            
@@ -48,3 +36,14 @@ class TestRouteCalculate(TestCase):
                        "SantaTiesrie"]
 
             self.assertEqual(waited, response.json)
+    
+    def test_route_calculate_from_example(self):
+        res = requests.post('http://127.0.0.1:8001/calculate', json=mock_input_data())
+        waited = ["Munich", 
+                       "Mitling", 
+                       "Kinganru", 
+                       "Facenianorth", 
+                       "Kinganru", 
+                       "SantaTiesrie"]
+        
+        self.assertEqual(waited, res.json())

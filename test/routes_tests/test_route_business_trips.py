@@ -2,6 +2,7 @@ from unittest import TestCase
 
 from mongoengine import connect, disconnect
 from flask import Flask
+import requests
 from src.models.penguin_travel import PenguinTravel
 
 from src.routes import add_routes
@@ -23,28 +24,32 @@ class TestRouteBusinessTrips(TestCase):
         self.app = Flask(__name__)
         add_routes(self.app)
 
-    def create_trips_mock(self, input_data = mock_input_data() ):
+    def test_route_business_trips(self):
+        """Test business trip information"""
+        with self.app.test_client() as test_client:
+            # Arrange
+            items_count = 3
+            expected = {
+                'penguins_with_most_trips': ["Alanto"],
+                'most_visited_place': ["Munich", "Mitling"],
+                'total_business_trips': items_count
+                }
+            penguin_travels = [self.__create_trips_mock() for _ in range(items_count)]
+                    
+            # Act
+            response = test_client.get('/business-trips')
+
+            for penguin in penguin_travels:
+                penguin.delete()
+
+            # Assert
+            self.assertDictEqual(response.json, expected)
+
+    
+    def __create_trips_mock(self, input_data = mock_input_data() ):
          
          penguin_travel = PenguinTravel(name=input_data["name"], 
                                    is_business_trip=input_data["business"], 
                                    places_to_travel=["Munich", "Mitling"])   
          penguin_travel.save()       
          return penguin_travel
-
-    def test_trips_info(self):
-        """Test business trip information"""
-        with self.app.test_client() as test_client:           
-            input_data = mock_input_data() 
-
-            penguin_travel = self.create_trips_mock()
-            penguin_travel = self.create_trips_mock()
-            penguin_travel = self.create_trips_mock()                      
-
-            response = test_client.get('/business-trips')
-
-            waited = {'penguins_with_most_trips': ["Alanto"],
-              'most_visited_place': ["Munich", "Mitling"],
-              'total_business_trips': 3}
-                        
-            penguin_travel.delete()            
-            self.assertDictEqual(waited, response.json)

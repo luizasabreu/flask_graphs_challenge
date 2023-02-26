@@ -7,7 +7,7 @@ def get_penguins_with_most_trips(penguin_travels):
 
     return __get_keys_with_the_greatest_value(names_dict)
 
-def get_most_visited_places(penguin_travels):
+def get_most_visited_places(penguin_travels): # corrigir, tá errado
     places_to_travel = [travel.places_to_travel for travel in penguin_travels]
     places_to_travel_list = (list(itertools.chain(*places_to_travel)))
     places_to_travel_dict = __create_count_dict(places_to_travel_list)
