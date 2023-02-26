@@ -50,6 +50,6 @@ class TestRouteBusinessTrips(TestCase):
          
          penguin_travel = PenguinTravel(name=input_data["name"], 
                                    is_business_trip=input_data["business"], 
-                                   places_to_travel=["Munich", "Mitling"])   
+                                   destinations=["Munich", "Mitling"])   
          penguin_travel.save()       
          return penguin_travel

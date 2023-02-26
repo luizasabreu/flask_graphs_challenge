@@ -12,7 +12,8 @@ def get_optimal_path(destinations: List[str], distances: List[str]) -> List[str]
         path.append(cities[1:])
 
     new_path = (list(itertools.chain(*path)))  
-
+    destinations.remove("Munich")
+    
     return new_path
 
 def __create_graph(distances: List[str]):

@@ -44,7 +44,7 @@ class TestTravelStatistics(TestCase):
         class MockedPenguinTravel():
             def __init__(self) -> None:
                 self.name = "Luiza"
-                self.places_to_travel = ["Brazil"]
+                self.destinations = ["Brazil"]
                 self.is_business_trip = True
         return [MockedPenguinTravel()]
         

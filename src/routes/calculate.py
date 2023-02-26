@@ -17,7 +17,7 @@ def calculate() -> List[str]:
     
     places_to_travel = get_optimal_path(destinations, distances)
     
-    save_penguin_travel(name=data['name'], business=data['business'], places_to_travel=places_to_travel)
+    save_penguin_travel(name=data['name'], business=data['business'], destinations=destinations)
 
     return places_to_travel
 
