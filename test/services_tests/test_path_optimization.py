@@ -15,6 +15,18 @@ class TestPathOtimization(TestCase):
     def mock_distances(self, mock_distances_fixture):
         self.distances = mock_distances_fixture
 
+    def test_get_optimal_path(self):
+        # Arrange
+        destinations = self.destinations
+        distances = self.distances
+        expected = ['Munich', 'Mitling', 'Kinganru', 'Facenianorth', 'Kinganru', 'SantaTiesrie']
+
+        # Act
+        result = get_optimal_path(destinations, distances)        
+
+        # Assert
+        self.assertEqual(result, expected)
+
     def test_get_optimal_path_without_destinations(self):
         # Arrange
         destinations = []
@@ -27,17 +39,26 @@ class TestPathOtimization(TestCase):
         # Assert
         self.assertEqual(result, expected)
 
-    def test_get_optimal_path(self):
+    def test_get_optimal_path_with_negative_distance(self):
         # Arrange
         destinations = self.destinations
-        distances = self.distances
-        expected = ['Munich', 'Mitling', 'Kinganru', 'Facenianorth', 'Kinganru', 'SantaTiesrie']
+        distances = ["Munich - Munich: -10"]
+        expected =  AssertionError
+        
+        # Act and Assert
+        with pytest.raises(expected):
+            get_optimal_path(destinations, distances)
+                
+    def test_get_optimal_path_without_distance(self):
+        # Arrange
+        destinations = self.destinations
+        distances = [""]
+        expected = AssertionError
 
-        # Act
-        result = get_optimal_path(destinations, distances)        
-
-        # Assert
-        self.assertEqual(result, expected)
+        # Act and Assert
+        with pytest.raises(expected):
+            get_optimal_path(destinations, distances)
+    
     
         
 

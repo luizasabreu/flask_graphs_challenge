@@ -12,35 +12,13 @@ As a backend developer, the main responsibility was to add two routes:
 2. A route `/business-trips` to get all consulted business trip information that can be used to think of new strategies. 
 
 ---
-## How to install
-A base API with a MongoDB connection already exists at `docker-compose.yml`. 
-To run it, execute the following command:
-```sh
-docker-compose rm -f; docker-compose -f docker-compose.yml up --build --force-recreate
-```
-
-Using a virtual environment with [Python 3.8](https://www.python.org/downloads/release/python-380/), install dependencies using:
-```sh
-python3 -m venv env; source env/bin/activate
-```
-
-All the created tests can be run using:
-```sh
-pytest test/
-```
-
-The example test given in the instructions can be running using:
-```sh
-pythton example.py
-```
----
 
 ## Project structure and algorithm strategy choices
 In the following session will be presented some graph theory and the explanation of the Dijkstra algorithm chosen to deal with the minimal path problem. After that, will be presented the project structure, routes, and models that were created. 
 
+---
 
-
-## Graph theory
+## Graph theory and Dijkstra algorithm
 A graph is a structure that can illustrate the problem where the nodes are the cities on the map and the edges are the roads with a certain weight which is the time taken to travel between the cities. 
 
 Considering this given input:
@@ -61,8 +39,6 @@ A graph that can illustrate it can be draw as:
 
 ![graph](images\graph.png)
 
-
-## Dijkstra algorithm
 Dijkstra algorithm is a strategy to find minimal paths between two nodes in a graph. It used a [greedy approach](https://www.programiz.com/dsa/greedy-algorithm#:~:text=A%20greedy%20algorithm%20is%20an,if%20the%20choice%20is%20wrong.) so it won’t work correctly with negative weights but, for the case analyzed, it's not a problem considering that a path will never have a negative time between two cities. 
 
 In a summarized way, the algorithm:
@@ -81,10 +57,15 @@ In a summarized way, the algorithm:
 ## Route: /calculate
 * Path: `src\routes\calculate.py`
 
-The `calculate` route is responsible to find all places that must be visited to have a minimum travel time for a given input. The input has information about the destinations and distances between cities related to the time taken to travel between them. It returns a dict with all places to visit in a certain order that guarantees minimal time on the road. 
-This route has a dependency on the `get_optimal_path` and `save_penguin_travel` services. 
+The `calculate` route only allows POST and is responsible to find all places that must be visited to have a minimum travel time for a given input. 
 
+- The input has information about the destinations and distances between cities related to the time taken to travel between them. 
 
+- The output returns a dictionary with all places to visit in a certain order that guarantees minimal time on the road. 
+
+This route has a dependency on the following services: 
+- `get_optimal_path`
+-  `save_penguin_travel` 
 
 
 ## Service: path_optimization
@@ -139,7 +120,14 @@ The `business-trips` route is responsible to get information about all business 
    * `most_visited_places`: List[str]. Places that most appear as destinations (places between destinations don't count!). If more than one place appears on the list, all of them must be returned.
    * `total_business_trips`: int. The number of business trips.
 
-The first action on this route is to call `get_penguin_travels` which is a function inside the `penguin_travel_access` service that returns the `PenguinTravel` model. After that, are called `get_penguins_with_most_trips`, `get_most_visited_places`, and `get_total_business_trips` functions that are inside the `travel_statistics` service. 
+The first action on this route is to call `get_penguin_travels` which is a function inside the `penguin_travel_access` service that returns the `PenguinTravel` model. 
+
+After that, are called the following functions:
+-  `get_penguins_with_most_trips`
+- `get_most_visited_places`
+- `get_total_business_trips` 
+
+All of them are inside `travel_statistics` service:  
 
 ## Service: travel_statistics
 * Path: `src\services\travel_statistics.py`
@@ -155,13 +143,63 @@ The last function `get_total_business_trips` counts how many business trip regis
 ## Tests 
 Some tests were created to guarantee code integrity, they were split between route_tests and services_tests. 
 
-### - services_tests
-Were created a test file for each service: `test_path_optimization`, `test_penguin_access`, and `test_travel_statistics`  
-### - route_tests
-...
+### Services tests:
+Were created a test file for each service: 
+* `test_path_optimization` 
+    * `test_get_optimal_path`
+    * `test_get_optimal_path_without_destinations`
+    * `test_get_optimal_path_with_negative_distance`
+    * `test_get_optimal_path_without_distances`
+
+
+* `test_penguin_access`
+    * `test_save_penguin_travel`
+
+* `test_travel_statistics`
+    * `test_get_penguins_with_most_trips`
+    * `test_get_most_visited_places`
+    * `test_get_total_business_trips`
+
+
+### Route tests:
+Were created a test file for each route: 
+* `test_route_business_trips`
+    * `test_route_business_trips`
+
+* `test_route_calculate`
+    * `test_route_calculate`
+    * `test_route_calculate_from_example`
+
+* `test_route_count_calls`
 
 
 
+
+
+
+
+---
+## How to install
+A base API with a MongoDB connection already exists at `docker-compose.yml`. 
+To run it, execute the following command:
+```sh
+docker-compose rm -f; docker-compose -f docker-compose.yml up --build --force-recreate
+```
+
+Using a virtual environment with [Python 3.8](https://www.python.org/downloads/release/python-380/), install dependencies using:
+```sh
+python3 -m venv env; source env/bin/activate
+```
+
+All the created tests can be run using:
+```sh
+pytest test/
+```
+
+The example test given in the instructions can be running using:
+```sh
+pythton example.py
+```
 ---
 
 ## Project Structure

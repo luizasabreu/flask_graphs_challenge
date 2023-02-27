@@ -10,3 +10,4 @@ def save_penguin_travel(name: str, business: bool, destinations: List[str]) -> N
 
 def get_penguin_travels():
     return PenguinTravel.objects()
+
