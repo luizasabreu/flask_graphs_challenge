@@ -1,3 +1,4 @@
 mongoengine==0.24.0
 flask==2.2.3
+requests==2.28.2
 networkx[default]
