@@ -52,8 +52,6 @@ In a summarized way, the algorithm:
 
 ---
 
-
-
 ## Route: /calculate
 * Path: `src\routes\calculate.py`
 
@@ -67,6 +65,7 @@ This route has a dependency on the following services:
 - `get_optimal_path`
 -  `save_penguin_travel` 
 
+---
 
 ## Service: path_optimization
 * Path: `src\services\path_optimization.py`
@@ -93,14 +92,16 @@ That's the behavior that `path_otimization` service tries to reproduce. From eac
 
 The service returns the optimal path that was found after all destinations analysis and the order of the cities that the penguin is going to be.
 
-
+---
 
 ## Service: penguin_travel_access
 * Path: `src\services\penguin_travel_access.py`
 
 After getting the optimal travel path, the function `save_penguin_travels` is called inside the `/calculate` route. This function is inside the penguin_travel_access file and was created to create a `PenguinTravel` model and save it inside the database. 
 
-To collect the data that are saved inside the database, the function `get_penguin_travels` were created.
+To collect the data that are saved inside the database, the function `get_penguin_travels` was created.
+
+---
 
 ## Model: PenguinTravel
 A `PenguinTravel` class was created to represent the travel that a penguin is doing. The model has three fields that are: 
@@ -111,6 +112,8 @@ A `PenguinTravel` class was created to represent the travel that a penguin is do
 The distances between cities and the minimal path are not saved inside the model because they are not being used by any other route and were chosen to implement the simplest solution. 
 
 If more routes were implemented and the API was dealing with more strategies using more complex data, the information could be saved in separate models. Could exist a specific penguin model that would have all the information about the person like name, age, and address, for example, and another model related to the business with the data about destinations, distances, and if it's a business trip.
+
+---
 
 ## Route: /business-trips
 * Path: `src\routes\business_trips.py`
@@ -128,6 +131,8 @@ After that, are called the following functions:
 - `get_total_business_trips` 
 
 All of them are inside `travel_statistics` service:  
+
+---
 
 ## Service: travel_statistics
 * Path: `src\services\travel_statistics.py`
