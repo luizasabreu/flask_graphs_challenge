@@ -7,8 +7,8 @@ def get_optimal_path(destinations: List[str], distances: List[str]) -> List[str]
     destinations.insert(0, "Munich")
     path = [["Munich"]]
 
-    for i in range(len(destinations)-1):
-        cities = nx.shortest_path(graph, destinations[i], destinations[i+1], weight="weight")
+    for city in range(len(destinations)-1):
+        cities = nx.shortest_path(graph, destinations[city], destinations[city+1], weight="weight")
         path.append(cities[1:])
 
     new_path = (list(itertools.chain(*path)))  
