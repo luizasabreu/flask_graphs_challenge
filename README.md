@@ -8,13 +8,13 @@
 ## 1. Introduction
 The main goal of this project was to extend a basic API that is part of a platform responsible to minimize travel time, based on destinations and distances between different places, so the penguins could spend more time at their final destination.  
 For the backend development the main task was to add two routes: 
-1. A route: `/calculate` that find all places that must be visited in order to have a minimum travel time for a given input 
+1. A route: `/calculate` that find all places that must be visited to have a minimum travel time for a given input 
 2. A route `/business-trips` to get all consulted business trip information that can be used to think of new strategies. 
 
 For that the project will have three layers:
-* __an API layer__ arraging the routes and calls to the service layer;
+* __an API layer__ arranging the routes and calls to the service layer;
 * __a Service layer__ performing calculations, manipulations and calling the model layer;
-* __a Model layer__ performing basic operations on the MongoDB.
+* __a Model layer__ performing basic operations on MongoDB.
 
 ---
 
@@ -24,7 +24,7 @@ In the following section, it will be presented some concepts of graph theory and
 
 
 ### 2.1 Graph theory
-A graph is a structure that can represent the problem where the nodes are the cities on the map and the edges are the roads with a certain weight which is the time taken to travel between the cities. In this case, we will use a undirected graph, which means that the weight from nodes A to B is the same as from B to A. 
+A graph is a structure that can represent the problem where the nodes are the cities on the map and the edges are the roads with a certain weight which is the time taken to travel between the cities. In this case, we will use an undirected graph, which means that the weight from nodes A to B is the same as from B to A. 
 
 Considering this given input:
 ```
@@ -57,7 +57,7 @@ In a summarized way, the algorithm:
 > 
 > <cite>https://medium.com/codex/how-does-dijkstras-algorithm-work-easy-explanation-in-less-than-5-minutes-e27f46795c18</cite>
 
-Comparing it with other algorithms for the same objective, like the Floyd-Warshall algorithm, the Dijkstra has a time complexity of O(n^2) in the worst case, while it's counterpart has time complexity of O(n^3).
+Comparing it with other algorithms for the same objective, like the Floyd-Warshall algorithm, the Dijkstra has a time complexity of O(n^2) in the worst case, while its counterpart has a time complexity of O(n^3).
 
 ---
 
@@ -70,28 +70,7 @@ This route is responsible to find all places that must be visited to have a mini
 
 **Input**: json with the name of the penguin, the desired sequence of destinations, if it is a business trip and distances between cities related to the time taken to travel between them. 
 
-```json
-{
-    "name": "Alanto",
-    "destinations": ["Kinganru", "Facenianorth", "SantaTiesrie"],
-    "business": true,
-    "distances": [
-        "Munich - Munich: 0",
-        "Munich - Kinganru: 3",
-        "Munich - Facenianorth: 7",
-        "Munich - SantaTiesrie: 4",
-        "Munich - Mitling: 1",
-        "Kinganru - Facenianorth: 2",
-        "Kinganru - SantaTiesrie: 1",
-        "Kinganru - Mitling: 1",
-        "Facenianorth - SantaTiesrie: 5",
-        "Facenianorth - Mitling:  3",
-        "SantaTiesrie - Mitling: 2"
-    ]
-}
-```
-
-**Output**: a json with all places to visit in the order that guarantees minimal travel time. 
+**Output**: a JSON with all places to visit so that guarantees minimal travel time. 
 
 ```json
 {
@@ -134,14 +113,14 @@ All of them are inside `travel_statistics.py` service.
 * `src\services\path_optimization.py`
 
 This service exposes the `get_optimal_path` method that is used by the `/calculate` route.
-To model and process the date the [NetworkX](https://networkx.org/) will be used, since it's possible to [create a graph](https://networkx.org/documentation/stable/tutorial.html) and use the Dijkstra algorithm by calling the [shortest_path](https://networkx.org/documentation/stable/reference/algorithms/shortest_paths.html) method.
+To model and process the date the [NetworkX](https://networkx.org/) will be used since it's possible to [create a graph](https://networkx.org/documentation/stable/tutorial.html) and use the Dijkstra algorithm by calling the [shortest_path](https://networkx.org/documentation/stable/reference/algorithms/shortest_paths.html) method.
 
 
-From each city in `destinations` input, the `shortest_path` method is called to find the minimal path between the actual city and the next destination.
+From each city in the `destinations` input, the `shortest_path` method is called to find the minimal path between the actual city and the next destination.
 
-The service then returns the optimal path that was found after all destinations analysis were made and the order of the cities that the penguin is going to be.
+The service then returns the optimal path that was found after all destinations analysis were made and the order of the cities that the penguin is going to be in.
 
-Lets make an example using the following sequence of destinations:
+Let's make an example using the following sequence of destinations:
 ```
 ["Kinganru", "Facenianorth", "SantaTiesrie"]
 ```
@@ -157,12 +136,15 @@ Finally, from Facenianorth to Santa Tiesrie, the optimal path will be `Faceniano
 
  ![path3](images\path3.png)
 
-So the final result will be the sequence `Munich - Mitling - Kinganru - Facenianorth - Kinganru - SantaTiesrie`.
+So the final result will be the sequence 
+```
+"Munich" - "Mitling" - "Kinganru" - "Facenianorth" - "Kinganru" - "SantaTiesrie".
+```
 
 ### 4.2 `penguin_travel_access`
 * `src\services\penguin_travel_access.py`
 
-After getting the optimal travel path, the function `save_penguin_travels` is called inside the `/calculate` route. This method create a `PenguinTravel` model instance and save it inside the database. 
+After getting the optimal travel path, the function `save_penguin_travels` is called inside the `/calculate` route. This method creates a `PenguinTravel`` model instance and saves it inside the database. 
 
 The `get_penguin_travels` function collects the `PenguinTravel` models saved in the database.
 
@@ -174,6 +156,32 @@ After getting the `PenguinTravel` information, `penguins_with_most_trips` are ca
 The function `get_most_visited_places` works in a similar way creating a dictionary where the keys are the destination places and the values are the number of times that they are mentioned inside the database 'destinations' field. The return of this function is a list of the most popular destinations. 
 
 The last function `get_total_business_trips` counts how many business trip registers are in the database. 
+
+For example, having on the bank these three registers: 
+```json
+{"name": "Alanto",
+"destinations": ["Kinganru", "Facenianorth", "SantaTiesrie"],
+"business": True}
+
+{"name": "Alanto",
+"destinations": ["Kinganru", "Facenianorth", "SantaTiesrie"],
+"business": True}
+
+{"name": "Alanto",
+"destinations": ["Kinganru", "Facenianorth", "SantaTiesrie"],
+"business": True}
+
+```
+The output from each function will be:
+```json
+get_penguins_with_most_trips : ["Alanto"]
+
+get_most_visited_places: ["Kinganru", "Facenianorth", "SantaTiesrie"]
+
+get_total_business_trips: 3
+
+```
+
 
 ---
 
@@ -236,7 +244,7 @@ All the created tests can be run using:
 pytest test/
 ```
 
-The example test given in the instructions can be running using:
+The example test given in the instructions can be run using:
 ```sh
 pythton example.py
 ```
