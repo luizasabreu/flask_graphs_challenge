@@ -262,6 +262,7 @@ The project follows this path structure:
 ├── Instructions.md
 ├── README.md
 ├── requirements.txt
+├── images 
 ├── src
     ├─── database.py
     ├─── models                
