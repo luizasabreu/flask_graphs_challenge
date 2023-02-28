@@ -2,6 +2,8 @@
 ![python 3.8 ][python_version]
 ![MongoDB][mongo_version]
 
+**Initial disclaimer:** this project is using git in a private mode just to control code version while I was developing. It's not public! 
+
 [python_version]: https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=white
 [mongo_version]: https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white
 
