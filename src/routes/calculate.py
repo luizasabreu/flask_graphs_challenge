@@ -7,7 +7,7 @@ from src.services.penguin_travel_access import save_penguin_travel
 def calculate() -> List[str]:
     """Find all places that must be visited to have a minimum travel time for a given input
 
-    Returns: dict with all places to visit
+    Returns: list with all places to visit
     """    
     data = request.get_json()
     destinations = data['destinations']

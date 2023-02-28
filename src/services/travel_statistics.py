@@ -4,12 +4,24 @@ from src.models.penguin_travel import PenguinTravel
 
 
 def get_penguins_with_most_trips(penguin_travels: PenguinTravel) -> List[str]:
+    """Creates a dictionary where
+        * keys = penguin's names   
+        * values = number of times that they are mentioned in the database    
+
+    Returns: list of the most popular names
+    """
     names_list = [travel.name for travel in penguin_travels]
     names_dict = __create_count_dict(names_list)
 
     return __get_keys_with_the_greatest_value(names_dict)
 
 def get_most_visited_places(penguin_travels: PenguinTravel) -> List[str]: 
+    """Creates a dictionary where
+        * keys = destinations   
+        * values = number of times that they are mentioned in the database    
+
+    Returns: list of the most popular destinations
+    """
     visited_places = [travel.destinations for travel in penguin_travels]
     visited_places_list = (list(itertools.chain(*visited_places)))
     visited_places_dict = __create_count_dict(visited_places_list)
@@ -18,6 +30,10 @@ def get_most_visited_places(penguin_travels: PenguinTravel) -> List[str]:
 
 
 def get_total_business_trips(penguin_travels: PenguinTravel) -> int:
+    """Counts how many business trip registers are in the database.
+
+    Returns: int with the number of business trip registers
+    """
     count_business = 0    
     for travel in penguin_travels:
         if travel.is_business_trip:
