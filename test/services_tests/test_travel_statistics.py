@@ -15,7 +15,7 @@ class TestTravelStatistics(TestCase):
     def test_get_penguins_with_most_trips(self):
         # Arrange
         penguin_travels = self.penguin_travels
-        expected = ["Luiza"]
+        expected = ["Alanto"]
 
         # Act
         result = get_penguins_with_most_trips(penguin_travels)        
@@ -26,7 +26,7 @@ class TestTravelStatistics(TestCase):
     def test_get_most_visited_places(self):
         # Arrange
         penguin_travels = self.penguin_travels
-        expected = ["Brazil"]
+        expected = ["Kinganru"]
 
         # Act
         result = get_most_visited_places(penguin_travels)        

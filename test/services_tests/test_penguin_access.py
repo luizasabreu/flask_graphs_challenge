@@ -14,9 +14,9 @@ class TestPenguinTravelAccess(TestCase):
 
     def test_save_penguin_travel(self):
         # Arrange
-        name = "Luiza"
+        name = "Alanto"
         business = True        
-        places_to_travel = ['Brazil']
+        places_to_travel = ['Kinganru']
 
         # Act
         save_penguin_travel(name, business, places_to_travel)        

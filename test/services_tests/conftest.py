@@ -22,8 +22,8 @@ def mock_distances_fixture():
 def mock_penguin_travels_fixture():
     class MockedPenguinTravel():
         def __init__(self) -> None:
-            self.name = "Luiza"
-            self.destinations = ["Brazil"]
+            self.name = "Alanto"
+            self.destinations = ["Kinganru"]
             self.is_business_trip = True
             
     return [MockedPenguinTravel()]
