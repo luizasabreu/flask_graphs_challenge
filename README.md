@@ -1,14 +1,13 @@
-# Celus Python Challenge
+# Flask API Python Challenge
 ![python 3.8 ][python_version]
 ![MongoDB][mongo_version]
-
-**Initial disclaimer:** this project is using git in a private mode just to control code version while I was developing. It's not public! 
 
 [python_version]: https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=white
 [mongo_version]: https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white
 
 ## 1. Introduction
-The main goal of this project was to extend a basic API that is part of a platform responsible to minimize travel time, based on destinations and distances between different places, so the penguins could spend more time at their final destination.  
+The main goal of this project was to extend a basic API that is part of a platform responsible to minimize travel time, based on destinations and distances between different places.
+
 For the backend development the main task was to add two routes: 
 1. A route: `/calculate` that find all places that must be visited to have a minimum travel time for a given input 
 2. A route `/business-trips` to get all consulted business trip information that can be used to think of new strategies. 
